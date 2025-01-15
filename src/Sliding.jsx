@@ -54,20 +54,6 @@ const SlidingCarousel = () => {
       </div>
 
       {/* Slider indicators */}
-      <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            type="button"
-            className={`w-3 h-3 rounded-full ${
-              currentSlide === index ? "bg-blue-600" : "bg-gray-400"
-            }`}
-            aria-current={currentSlide === index ? "true" : "false"}
-            aria-label={`Slide ${index + 1}`}
-            onClick={() => goToSlide(index)}
-          ></button>
-        ))}
-      </div>
 
       {/* Slider controls */}
     </div>
