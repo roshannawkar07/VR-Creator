@@ -4,7 +4,7 @@ const SlidingCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Array of image URLs (replace with your actual images)
-  const slides = ["assets/GIF.gif"];
+  const slides = ["assets/vedio 2.gif"];
 
   // Handle next slide
   const nextSlide = () => {
