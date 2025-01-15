@@ -1,147 +1,168 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const Cards = () => {
+const Bslider = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Handler for carousel slide change (previous/next)
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev === 0 ? 2 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev === 2 ? 0 : prev + 1));
+  };
+
+  // Set up an interval to change the image every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev === 2 ? 0 : prev + 1));
+    }, 2000); // 2000ms = 2 seconds
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div
-      id="default-carousel"
-      className="relative w-full"
-      data-carousel="slide"
+      id="carouselDarkVariant"
+      className=" relative"
+      data-twe-carousel-init
+      data-twe-ride="carousel"
     >
-      {/* Carousel wrapper */}
-      <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-        {/* Item 1 */}
-        <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-1.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
-        {/* Item 2 */}
-        <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-2.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
-        {/* Item 3 */}
-        <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-3.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
-        {/* Item 4 */}
-        <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-4.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
-        {/* Item 5 */}
-        <div className="hidden duration-700 ease-in-out" data-carousel-item>
-          <img
-            src="/docs/images/carousel/carousel-5.svg"
-            className="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-            alt="..."
-          />
-        </div>
+      <div className=" -mt-16 lg:w-1/2 w-full mb-6 lg:mb-0">
+        <h1 className="pl-5 sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">
+          Awer Art
+        </h1>
+        <div className=" ml-4 h-1 w-28 bg-gradient-to-br from-pink-500 to-orange-400 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800 rounded-lg"></div>
       </div>
-
-      {/* Slider indicators */}
-      <div className="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="true"
-          aria-label="Slide 1"
-          data-carousel-slide-to="0"
-        ></button>
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="false"
-          aria-label="Slide 2"
-          data-carousel-slide-to="1"
-        ></button>
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="false"
-          aria-label="Slide 3"
-          data-carousel-slide-to="2"
-        ></button>
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="false"
-          aria-label="Slide 4"
-          data-carousel-slide-to="3"
-        ></button>
-        <button
-          type="button"
-          className="w-3 h-3 rounded-full"
-          aria-current="false"
-          aria-label="Slide 5"
-          data-carousel-slide-to="4"
-        ></button>
-      </div>
-
-      {/* Slider controls */}
-      <button
-        type="button"
-        className="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        data-carousel-prev
+      {/* Carousel indicators */}
+      <div
+        className="absolute inset-x-0 bottom-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0"
+        data-twe-carousel-indicators
       >
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+        {[0, 1, 2].map((index) => (
+          <button
+            key={index}
+            data-twe-target="#carouselDarkVariant"
+            data-twe-slide-to={index}
+            className={`mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-black bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none ${
+              activeIndex === index ? "opacity-100" : ""
+            }`}
+            aria-current={activeIndex === index ? "true" : "false"}
+            aria-label={`Slide ${index + 1}`}
+          ></button>
+        ))}
+      </div>
+
+      {/* Carousel items */}
+      <div className="relative w-full overflow-hidden after:clear-both after:block after:content-['']">
+        {/* First item */}
+        <div
+          className={`relative float-left -mr-[100%] w-full transition-opacity duration-[600ms] ease-in-out ${
+            activeIndex === 0 ? "opacity-100" : "opacity-0"
+          }`}
+          data-twe-carousel-fade
+          data-twe-carousel-item
+        >
+          <img
+            src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(19).webp"
+            className="block w-full"
+            alt="Motorbike Smoke"
+          />
+          <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-black md:block">
+            <h5 className="text-xl">First slide label</h5>
+            <p>Some representative placeholder content for the first slide.</p>
+          </div>
+        </div>
+
+        {/* Second item */}
+        <div
+          className={`relative float-left -mr-[100%] w-full transition-opacity duration-[600ms] ease-in-out ${
+            activeIndex === 1 ? "opacity-100" : "opacity-0"
+          }`}
+          data-twe-carousel-fade
+          data-twe-carousel-item
+        >
+          <img
+            src="assets/Logo1.png"
+            className="block w-full"
+            alt="Mountaintop"
+          />
+          <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-black md:block">
+            <h5 className="text-xl">Second slide label</h5>
+            <p>Some representative placeholder content for the second slide.</p>
+          </div>
+        </div>
+
+        {/* Third item */}
+        <div
+          className={`relative float-left -mr-[100%] w-full transition-opacity duration-[600ms] ease-in-out ${
+            activeIndex === 2 ? "opacity-100" : "opacity-0"
+          }`}
+          data-twe-carousel-fade
+          data-twe-carousel-item
+        >
+          <img
+            src="assets/G1.jpg"
+            className="block w-full"
+            alt="Woman Reading a Book"
+          />
+          <div className="absolute inset-x-[15%] bottom-5 hidden py-5 text-center text-black md:block">
+            <h5 className="text-xl">Third slide label</h5>
+            <p>Some representative placeholder content for the third slide.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Carousel controls - prev item */}
+      <button
+        className="absolute bottom-0 left-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-black opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-black hover:no-underline hover:opacity-90 hover:outline-none"
+        type="button"
+        onClick={handlePrev}
+      >
+        <span className="inline-block h-8 w-8 dark:grayscale">
           <svg
-            className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
-            viewBox="0 0 6 10"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="h-6 w-6"
           >
             <path
-              stroke="currentColor"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5 1 1 5l4 4"
+              d="M15.75 19.5L8.25 12l7.5-7.5"
             />
           </svg>
-          <span className="sr-only">Previous</span>
         </span>
       </button>
 
+      {/* Carousel controls - next item */}
       <button
+        className="absolute bottom-0 right-0 top-0 z-[1] flex w-[15%] items-center justify-center border-0 bg-none p-0 text-center text-black opacity-50 transition-opacity duration-150 ease-[cubic-bezier(0.25,0.1,0.25,1.0)] hover:text-black hover:no-underline hover:opacity-90 hover:outline-none"
         type="button"
-        className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        data-carousel-next
+        onClick={handleNext}
       >
-        <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+        <span className="inline-block h-8 w-8 dark:grayscale">
           <svg
-            className="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180"
-            aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
-            viewBox="0 0 6 10"
+            viewBox="0 0 24 24"
+            strokeWidth="1.5"
+            stroke="currentColor"
+            className="h-6 w-6"
           >
             <path
-              stroke="currentColor"
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth="2"
-              d="m1 9 4-4-4-4"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
             />
           </svg>
-          <span className="sr-only">Next</span>
         </span>
       </button>
     </div>
   );
 };
 
-export default Cards;
+export default Bslider;

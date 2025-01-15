@@ -1,9 +1,11 @@
 import Nav from "./Nav";
+
 import Sliding from "./Sliding";
-// import Img from "./Img";
 import Contact from "./Contact";
 import Footer from "./footer";
 import Cards from "./Cards";
+import Bslider from "./Bslider";
+
 function App() {
   return (
     <>
@@ -11,6 +13,7 @@ function App() {
       <Sliding />
       {/* <Img /> */}
       <Cards />
+      <Bslider />
       <Contact />
       <Footer />
     </>
